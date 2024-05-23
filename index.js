@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 // import cors from "cors";
 import UserRoute from "./Routes/UserRoute.js";
+import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 
 
 dotenv.config();
@@ -34,8 +35,9 @@ app.use(bodyParser.json());
 // app.use(cors());
 
 // middlewares =====>
-app.use("/api/auth", UserRoute);
-
+  
+  app.use("/api/auth", UserRoute);
+  app.use("/api/coverLetter", CoverLetterRoute);
 
 //Error Middleware ====>
 app.use((err, req, res, next) => {
