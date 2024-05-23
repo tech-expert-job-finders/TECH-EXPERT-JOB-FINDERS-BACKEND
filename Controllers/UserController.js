@@ -10,41 +10,41 @@ import nodemailer from "nodemailer";
 const { genSalt, hash } = bcryptjs;
 
 //create register controller ===>
-export const register = async (req, res, next) => {
-  // console.log(req.body, 'req.body ====>')
-  // console.log(req.body.username, 'req.body.username ====>')
-  // console.log(req.body.email, 'req.body.email ====>')
-  // console.log(req.body.password, 'req.body.password ====>')
-
-  try {
-    const salt = await genSalt(12);
-    const hashedPassword = await hash(req.body.password, salt);
-
-    // const email = req.body.email;
-
-    const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: hashedPassword,
-    });
-
-    // console.log(newUser)
-
-    //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
-    // console.log(newUser);
-    const { password, ...others } = newUser._doc; //
-
-    await newUser.save();
-    let message = "User Create Successfully";
-    res.status(200).json({
-      status: "Success",
-      message: message,
-      data: others,
-    });
-  } catch (error) {
-    next(createError(error.status, error.message));
-  }
-};
+  export const register = async (req, res, next) => {
+    // console.log(req.body, 'req.body ====>')
+    // console.log(req.body.username, 'req.body.username ====>')
+    // console.log(req.body.email, 'req.body.email ====>')
+    // console.log(req.body.password, 'req.body.password ====>')
+  
+    try {
+      const salt = await genSalt(12);
+      const hashedPassword = await hash(req.body.password, salt);
+  
+      // const email = req.body.email;
+  
+      const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+      });
+  
+      // console.log(newUser)
+  
+      //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
+      // console.log(newUser);
+      const { password, ...others } = newUser._doc; //
+  
+      await newUser.save();
+      let message = "User Create Successfully";
+      res.status(200).json({
+        status: "Success",
+        message: message,
+        data: others,
+      });
+    } catch (error) {
+      next(createError(error.status, error.message));
+    }
+  };
 
 //create login controller ===>
 export async function login(req, res, next) {
