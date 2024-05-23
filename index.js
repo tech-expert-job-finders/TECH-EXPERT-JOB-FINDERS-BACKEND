@@ -6,7 +6,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import jobRoutes from "./Routes/jobRoutes.js";
 import UserRoute from "./Routes/UserRoute.js";
+import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 import cvRoute from "./Routes/myCvRoute.js";
+
 
 dotenv.config();
 const app = express();
@@ -34,9 +36,15 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // middlewares =====>
+
+  
+app.use("/api/auth", UserRoute);
+app.use("/api/coverLetter", CoverLetterRoute);
+
 app.use("/api/job", jobRoutes);
 app.use("/api/auth", UserRoute);
 app.use("/api/myCv", cvRoute);
+
 
 //Error Middleware ====>
 app.use((err, req, res, next) => {
