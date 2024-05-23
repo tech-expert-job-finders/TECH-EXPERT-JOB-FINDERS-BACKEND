@@ -7,6 +7,7 @@ import cors from "cors";
 import jobRoutes from "./Routes/jobRoutes.js";
 import UserRoute from "./Routes/UserRoute.js";
 import blogRoutes from "./Routes/blogRoutes.js";
+import feedbackRoutes from "./Routes/feedbackRoutes.js";
 
 
 dotenv.config();
@@ -38,6 +39,7 @@ app.use(cors());
 app.use("/api/auth", UserRoute);
 app.use('/api/job', jobRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/feedback', feedbackRoutes);
 
 
 //Error Middleware ====>
