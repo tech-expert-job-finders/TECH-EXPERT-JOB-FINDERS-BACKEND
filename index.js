@@ -1,18 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
-// import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-// import cors from "cors";
+import cors from "cors";
+import jobRoutes from "./Routes/jobRoutes.js";
 import UserRoute from "./Routes/UserRoute.js";
 import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
+import cvRoute from "./Routes/myCvRoute.js";
 
 
 dotenv.config();
 const app = express();
 
 //Port defined in env if in no one in .env then 5500 is executed.. ====>
-const PORT = process.env.PORT || 5500;  //
+const PORT = process.env.PORT || 5500; //
 // console.log(PORT);
 
 // Connect to MongoDB =====>
@@ -20,7 +22,7 @@ const connectDB = () => {
   mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
-      console.log("Backend Connected");
+      console.log("Database Connected");
     })
     .catch((error) => {
       throw error;
@@ -28,16 +30,21 @@ const connectDB = () => {
 };
 
 // Middlewares=====>>>>
-// app.use(cookieParser());
-// app.use(express.json());
+app.use(cookieParser());
+app.use(express.json());
 app.use(bodyParser.json());
-// //Reading in json file for this body parser =====>
-// app.use(cors());
+app.use(cors());
 
 // middlewares =====>
+
   
-  app.use("/api/auth", UserRoute);
-  app.use("/api/coverLetter", CoverLetterRoute);
+app.use("/api/auth", UserRoute);
+app.use("/api/coverLetter", CoverLetterRoute);
+
+app.use("/api/job", jobRoutes);
+app.use("/api/auth", UserRoute);
+app.use("/api/myCv", cvRoute);
+
 
 //Error Middleware ====>
 app.use((err, req, res, next) => {
