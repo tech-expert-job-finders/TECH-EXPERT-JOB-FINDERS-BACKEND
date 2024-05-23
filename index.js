@@ -4,20 +4,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
-import authRoute from "./Routes/authRoute.js";
-import adminRoute from "./Routes/adminRoute.js";
-import invoiceRoute from "./Routes/invoiceRoute.js";
-import appointmentsRoute from "./Routes/appointmentsRoute.js";
-import patientsRoute from "./Routes/patientRoute.js";
-import teamMembersRoute from "./Routes/teamMemberRoute.js";
-import productsRoute from "./Routes/productsRoute.js";
-import uploadRoute from "./Routes/uploadRoute.js";
-import physicianRoute from "./Routes/PhysicianRoute.js";
-import faqsRoute from "./Routes/faqsRoute.js";
-import servicesRoute from "./Routes/servicesRoute.js";
-import bannerRoute from "./Routes/bannerRoutes.js";
-import testimonialRoute from "./Routes/testimonialRoute.js";
-import meetRoute from "./Routes/zoomMeetRoute.js";
+import jobRoutes from "./Routes/jobRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -30,7 +17,7 @@ const connectDB = () => {
   mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
-      console.log("Backend Connected");
+      console.log("Database Connected");
     })
     .catch((error) => {
       throw error;
@@ -41,11 +28,10 @@ const connectDB = () => {
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
-//Reading in json file for this body parser =====>
 app.use(cors());
 
 // middlewares =====>
-app.use("/api/auth", authRoute);
+app.use('/api/job', jobRoutes)
 
 
 //Error Middleware ====>
