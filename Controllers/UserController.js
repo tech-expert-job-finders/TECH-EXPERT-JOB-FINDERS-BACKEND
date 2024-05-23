@@ -2,11 +2,11 @@ import bcryptjs from "bcryptjs";
 import User from "../Models/UserModel.js";
 import { createError } from "../Utils/error.js";
 import jwt from "jsonwebtoken";
-import { responseMessages } from "../constants/responseMessages.js";
 import nodemailer from "nodemailer";
+// import { responseMessages } from "../constants/responseMessages.js";
 // import { BADREQUEST } from "../constants/httpStatus.js";
 
-const { MISSING_FIELD_EMAIL, UN_AUTHORIZED_EMAIL } = responseMessages;
+// const { MISSING_FIELD_EMAIL, UN_AUTHORIZED_EMAIL } = responseMessages;
 const { genSalt, hash } = bcryptjs;
 
 //create register controller ===>
@@ -31,7 +31,8 @@ export const register = async (req, res, next) => {
     // console.log(newUser)
 
     //REMOVING CRITICAL INFO FROM THE DATA TO SEND THE RESPONSE
-    const { password, ...others } = newUser._doc;
+    // console.log(newUser);
+    const { password, ...others } = newUser._doc; //
 
     await newUser.save();
     let message = "User Create Successfully";
@@ -46,7 +47,7 @@ export const register = async (req, res, next) => {
 };
 
 //create login controller ===>
-export async function login(req, res, next) {
+export async function login (req, res, next) {
   try {
     const user = await User.findOne({ email: req.body.email });
     // console.log(user);
@@ -62,7 +63,11 @@ export async function login(req, res, next) {
       return;
     }
     const token = jwt.sign({ user }, process.env.JWT, { expiresIn: "24h" });
+    // console.log(token);
+    // console.log(user);
+    // console.log(user._doc);
     const { password, ...other } = user._doc;
+    console.log(other);
     let message = "User sign in successfully";
     res
       .cookie("access_token", token, {
@@ -133,10 +138,6 @@ export const getUser = async (req, res, next) => {
   }
 };
 
-
-
-
-
 export const sendEmailFunc = async (req, res, next) => {
   try {
     const toEmail = req.body.toEmail;
@@ -173,14 +174,11 @@ export const sendEmailFunc = async (req, res, next) => {
       status: "Success",
       message: "Email Sent Successfully",
     });
-
   } catch (error) {
     console.error("Error sending email:", error);
     next(createError(error.status || 500, error.message));
   }
 };
-
-
 
 // export const sendEmailFunction = async (req, res, next) => {
 //   try {
@@ -210,9 +208,9 @@ export const sendEmailFunc = async (req, res, next) => {
 //       text: `Dear Hasan Ashraf,
 
 //       Great news! We are pleased to inform you that your account has been successfully approved. You are now ready to access our full range of services and start your journey with us.
-      
+
 //       Please login to get access to your account. Thanks for being with us.
-      
+
 //       Best regards,
 //       Trim Slim`, // Email body
 //     });

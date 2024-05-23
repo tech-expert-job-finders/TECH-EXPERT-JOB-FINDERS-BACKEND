@@ -11,7 +11,7 @@ export const verifyToken = (req, res, next) => {
     if (err) {
       return next(createError(403, "Invaild token!!"));
     }
-    req.admin = user;
+    req.user = user;
     next();
   });
 };
