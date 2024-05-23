@@ -47,7 +47,7 @@ export const register = async (req, res, next) => {
 };
 
 //create login controller ===>
-export async function login (req, res, next) {
+export async function login(req, res, next) {
   try {
     const user = await User.findOne({ email: req.body.email });
     // console.log(user);
@@ -88,13 +88,21 @@ export async function login (req, res, next) {
 //create updateUser controller ===>
 export const updateUser = async (req, res, next) => {
   try {
+    if (req.body.password) {
+      // Hash the new password
+      const salt = await bcryptjs.genSalt(12);
+      const hashPassword = await bcryptjs.hash(req.body.password, salt);
+      req.body.password = hashPassword;
+    }
+
     const userId = req.params.userId;
     const updateUser = await User.findByIdAndUpdate(
       userId,
       { $set: req.body },
       { new: true }
     );
-
+    const { password, ...others } = updateUser._doc;
+    console.log(password);
     if (!updateUser) {
       return next(createError(404, "User not found"));
     }
@@ -102,7 +110,7 @@ export const updateUser = async (req, res, next) => {
     res.status(200).json({
       status: "success",
       message: "User Updated Successfully",
-      data: updateUser,
+      data: others,
     });
   } catch (error) {
     next(createError(error.status || 500, error.message || "Server Error"));
@@ -112,6 +120,15 @@ export const updateUser = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
+
+    const foundUser = await User.findById(userId);
+    if (!foundUser) {
+      res.status(404).json({
+        status: "failed",
+        message: "User Not Found in Database",
+      });
+    }
+
     const deleteUser = await User.findByIdAndDelete(userId);
     console.log(deleteUser);
 
@@ -128,10 +145,37 @@ export const getUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const getUser = await User.findById(userId);
+
+    const { password, ...others } = getUser._doc;
     res.status(200).json({
       status: "Success",
       message: " Single User Found",
-      data: getUser,
+      data: others,
+    });
+  } catch (error) {
+    next(createError(error.status, error.message));
+  }
+};
+
+export const getAllUsers = async (req, res, next) => {
+  try {
+    const getAllUser = await User.find();
+
+    // const { password, ...others } = getAllUser._doc;
+    // console.log(getAllUser[0]);
+    const allDataUsers = [];
+    // console.log(allDataUsers, "line no 167");
+
+    getAllUser.map((data) => {
+      // console.log(data);
+      const { password, ...others } = data._doc;
+      allDataUsers.push(others);
+    });
+    // console.log(allDataUsers, "line no 175");
+    res.status(200).json({
+      status: "Success",
+      message: " All Users Found",
+      data: allDataUsers,
     });
   } catch (error) {
     next(createError(error.status, error.message));
