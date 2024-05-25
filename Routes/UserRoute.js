@@ -3,9 +3,10 @@ import express from "express";
 import {
   register,
   login,
-  updateUser,
+  updateUserPassword,
   deleteUser,
   getUser,
+  updateUser,
   getAllUsers,
   sendEmailFunc,
 } from "../Controllers/UserController.js";
@@ -13,6 +14,7 @@ const UserRoute = express.Router();
 
 UserRoute.post("/register", register);
 UserRoute.post("/login", login);
+UserRoute.put("/updatePassword/:userId", updateUserPassword);
 UserRoute.put("/update/:userId", updateUser);
 UserRoute.get("/getUser/:userId", getUser);
 UserRoute.get("/getAllUsers/find", getAllUsers);

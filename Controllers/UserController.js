@@ -46,6 +46,8 @@ const { genSalt, hash } = bcryptjs;
     }
   };
 
+
+
 //create login controller ===>
 export async function login(req, res, next) {
   try {
@@ -85,8 +87,35 @@ export async function login(req, res, next) {
   }
 }
 
+
+
 //create updateUser controller ===>
 export const updateUser = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updateUser) {
+      return next(createError(404, "User not found"));
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "User Updated Successfully",
+      data: updateUser,
+    });
+  } catch (error) {
+    next(createError(error.status || 500, error.message || "Server Error"));
+  }
+};
+
+
+//create updateUserPassword controller ===>
+export const updateUserPassword = async (req, res, next) => {
   try {
     if (req.body.password) {
       // Hash the new password
@@ -96,26 +125,29 @@ export const updateUser = async (req, res, next) => {
     }
 
     const userId = req.params.userId;
-    const updateUser = await User.findByIdAndUpdate(
+    const updateUserPassword = await User.findByIdAndUpdate(
       userId,
       { $set: req.body },
       { new: true }
     );
-    const { password, ...others } = updateUser._doc;
-    console.log(password);
-    if (!updateUser) {
+    const { password, ...others } = updateUserPassword._doc;
+    // console.log(password);
+    if (!updateUserPassword) {
       return next(createError(404, "User not found"));
     }
 
     res.status(200).json({
       status: "success",
-      message: "User Updated Successfully",
-      data: others,
+      message: "User Password Updated Successfully",
+      // data: others,
     });
   } catch (error) {
     next(createError(error.status || 500, error.message || "Server Error"));
   }
 };
+
+
+
 
 export const deleteUser = async (req, res, next) => {
   try {
@@ -141,6 +173,9 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
+
+
+
 export const getUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -156,6 +191,9 @@ export const getUser = async (req, res, next) => {
     next(createError(error.status, error.message));
   }
 };
+
+
+
 
 export const getAllUsers = async (req, res, next) => {
   try {
@@ -181,6 +219,11 @@ export const getAllUsers = async (req, res, next) => {
     next(createError(error.status, error.message));
   }
 };
+
+
+
+
+
 
 export const sendEmailFunc = async (req, res, next) => {
   try {

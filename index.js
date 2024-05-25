@@ -11,12 +11,11 @@ import feedbackRoutes from "./Routes/feedbackRoutes.js";
 import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 import cvRoute from "./Routes/myCvRoute.js";
 
-
-
 dotenv.config();
 const app = express();
 
 //Port defined in env if in no one in .env then 5500 is executed.. ====>
+// const PORT =  5000; //
 const PORT = process.env.PORT || 5500; //
 // console.log(PORT);
 
@@ -36,19 +35,20 @@ const connectDB = () => {
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+      credentials: true,
+      origin: "*",
+    })
+);
 
 // middlewares =====>
 app.use("/api/auth", UserRoute);
 app.use("/api/myCv", cvRoute);
 app.use("/api/coverLetter", CoverLetterRoute);
 app.use("/api/job", jobRoutes);
-app.use('/api/blog', blogRoutes);
-app.use('/api/feedback', feedbackRoutes);
-
-
-
-
+app.use("/api/blog", blogRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 //Error Middleware ====>
 app.use((err, req, res, next) => {
