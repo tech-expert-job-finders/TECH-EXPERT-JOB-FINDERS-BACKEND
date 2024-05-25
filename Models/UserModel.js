@@ -14,7 +14,13 @@ const userSchema = Schema({
         type : String,
         required: true,
         min: 6
-    }
+    },
+    phoneNumber : {
+        type : String,
+    },
+    aboutMe : {
+        type : String,
+    },
    
     
 },
