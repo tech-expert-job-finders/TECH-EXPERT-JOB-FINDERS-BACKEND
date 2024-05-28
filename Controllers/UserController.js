@@ -25,6 +25,7 @@ const { genSalt, hash } = bcryptjs;
       const newUser = new User({
         username: req.body.username,
         email: req.body.email,
+        // password: req.body.password,
         password: hashedPassword,
       });
   
@@ -103,10 +104,13 @@ export const updateUser = async (req, res, next) => {
       return next(createError(404, "User not found"));
     }
 
+    // console.log(updateUser)
+    const {password, ...others} = updateUser._doc
+
     res.status(200).json({
       status: "success",
       message: "User Updated Successfully",
-      data: updateUser,
+      data: others,
     });
   } catch (error) {
     next(createError(error.status || 500, error.message || "Server Error"));
@@ -114,33 +118,47 @@ export const updateUser = async (req, res, next) => {
 };
 
 
-//create updateUserPassword controller ===>
+
+
+
 export const updateUserPassword = async (req, res, next) => {
   try {
-    if (req.body.password) {
-      // Hash the new password
-      const salt = await bcryptjs.genSalt(12);
-      const hashPassword = await bcryptjs.hash(req.body.password, salt);
-      req.body.password = hashPassword;
-    }
-
     const userId = req.params.userId;
-    const updateUserPassword = await User.findByIdAndUpdate(
-      userId,
-      { $set: req.body },
-      { new: true }
-    );
-    const { password, ...others } = updateUserPassword._doc;
-    // console.log(password);
-    if (!updateUserPassword) {
-      return next(createError(404, "User not found"));
+    const { password, newPassword } = req.body;
+
+    const searchUser = await User.findById(userId);
+    if (!searchUser) {
+      return res.status(404).send({
+        status: "Failed",
+        message: 'User Not Found'
+      });
     }
 
-    res.status(200).json({
-      status: "success",
-      message: "User Password Updated Successfully",
-      // data: others,
-    });
+    if (password) {
+      // console.log(password, "====> req.body.password");
+      // console.log(searchUser.password, "====> DB password");
+
+      const isCorrect = await bcryptjs.compare(password, searchUser.password);
+      if (!isCorrect) {
+        return next(createError(400, "Current password doesn't match"));
+      } else {
+        const salt = await bcryptjs.genSalt(12);
+        const hashedNewPassword = await bcryptjs.hash(newPassword, salt);
+
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { $set: { password: hashedNewPassword } },
+          { new: true }
+        );
+
+        res.status(200).json({
+          status: "success",
+          message: "User Password Updated Successfully",
+        });
+      }
+    } else {
+      return next(createError(400, "Password is required"));
+    }
   } catch (error) {
     next(createError(error.status || 500, error.message || "Server Error"));
   }

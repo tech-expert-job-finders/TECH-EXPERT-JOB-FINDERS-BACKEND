@@ -10,13 +10,14 @@ import blogRoutes from "./Routes/blogRoutes.js";
 import feedbackRoutes from "./Routes/feedbackRoutes.js";
 import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 import cvRoute from "./Routes/myCvRoute.js";
+import uploadRoute from "./Routes/uploadRoute.js";
 
 dotenv.config();
 const app = express();
 
 //Port defined in env if in no one in .env then 5500 is executed.. ====>
-// const PORT =  5000; //
-const PORT = process.env.PORT || 5500; //
+const PORT =  5000; //
+// const PORT = process.env.PORT || 5500; //
 // console.log(PORT);
 
 // Connect to MongoDB =====>
@@ -49,6 +50,7 @@ app.use("/api/coverLetter", CoverLetterRoute);
 app.use("/api/job", jobRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/feedback", feedbackRoutes);
+app.use("/api/upload", uploadRoute);
 
 //Error Middleware ====>
 app.use((err, req, res, next) => {
