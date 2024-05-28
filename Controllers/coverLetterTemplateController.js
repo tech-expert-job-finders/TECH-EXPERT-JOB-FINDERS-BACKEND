@@ -25,7 +25,7 @@ export const getSingleLetter = async (req, res, next) => {
     try {
         const letterId = req.params.letterId;
         console.log(letterId);
-        const getLetter = await coverLetterTemplate.findById(letterId);
+        const getLetter = await CoverLetterTemplate.findById(letterId);
         res.status(200).json({
             status: "Success",
             message: " Single Letter Found",
@@ -40,7 +40,7 @@ export const getSingleLetter = async (req, res, next) => {
 
 export const getAllLetter = async (req, res, next) => {
     try {
-        const getAllLetter = await coverLetterTemplate.find();
+        const getAllLetter = await CoverLetterTemplate.find();
         res.status(200).json({
             status: "Success",
             message: " All Letter Found",
