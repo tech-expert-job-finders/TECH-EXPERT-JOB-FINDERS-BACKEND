@@ -47,13 +47,19 @@ const coverLetterSchema = Schema(
       type: String,
       // required:true,
     },
-
     city: {
       type: String,
       // required:true,
     },
-
     state: {
+      type: String,
+      // required:true,
+    },
+    userId: {
+      type: String,
+      // required:true,
+    },
+    templateId: {
       type: String,
       // required:true,
     },
