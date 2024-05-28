@@ -21,6 +21,9 @@ const userSchema = Schema({
     aboutMe : {
         type : String,
     },
+    profileImg : {
+        type : String,
+    },
    
     
 },
