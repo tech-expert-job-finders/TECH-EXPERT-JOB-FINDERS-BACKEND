@@ -12,6 +12,7 @@ import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 import cvRoute from "./Routes/myCvRoute.js";
 import uploadRoute from "./Routes/uploadRoute.js";
 import CoverLetterTemplateRoute from "./Routes/coverLetterTemplateRoutes.js";
+import ResumeTemplateRoute from "./Routes/resumeTemplateRoute.js";
 
 dotenv.config();
 const app = express();
@@ -41,12 +42,13 @@ app.use(
   cors({
       credentials: true,
       origin: "*",
-    })
+    })
 );
 
 // middlewares =====>
 app.use("/api/auth", UserRoute);
 app.use("/api/myCv", cvRoute);
+app.use("/api/myResume", ResumeTemplateRoute);
 app.use("/api/coverLetter", CoverLetterRoute);
 app.use("/api/coverLetterTem", CoverLetterTemplateRoute);
 app.use("/api/job", jobRoutes);
