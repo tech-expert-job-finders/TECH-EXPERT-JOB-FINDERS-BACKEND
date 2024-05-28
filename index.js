@@ -10,6 +10,7 @@ import blogRoutes from "./Routes/blogRoutes.js";
 import feedbackRoutes from "./Routes/feedbackRoutes.js";
 import CoverLetterRoute from "./Routes/CoverLetterRoute.js";
 import cvRoute from "./Routes/myCvRoute.js";
+import CoverLetterTemplateRoute from "./Routes/coverLetterTemplateRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -46,6 +47,7 @@ app.use(
 app.use("/api/auth", UserRoute);
 app.use("/api/myCv", cvRoute);
 app.use("/api/coverLetter", CoverLetterRoute);
+app.use("/api/coverLetterTem", CoverLetterTemplateRoute);
 app.use("/api/job", jobRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/feedback", feedbackRoutes);
