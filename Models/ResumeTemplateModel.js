@@ -17,6 +17,7 @@ const resumeTemplateModel = Schema(
     price: {
       type: String,
     },
+    
   },
   { timestamps: true }
 );
