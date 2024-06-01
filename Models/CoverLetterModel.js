@@ -55,6 +55,10 @@ const coverLetterSchema = Schema(
       type: String,
       // required:true,
     },
+    letter: {
+      type: String,
+      // required:true,
+    },
     userId: {
       type: String,
       // required:true,
