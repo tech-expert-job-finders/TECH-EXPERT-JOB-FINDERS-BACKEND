@@ -13,6 +13,10 @@ import cvRoute from "./Routes/myCvRoute.js";
 import uploadRoute from "./Routes/uploadRoute.js";
 import CoverLetterTemplateRoute from "./Routes/coverLetterTemplateRoutes.js";
 import ResumeTemplateRoute from "./Routes/resumeTemplateRoute.js";
+
+import WebsiteTemplateRoute from "./Routes/websiteTemplateRoute.js";
+import websiteRoute from "./Routes/webisteRoute.js";
+
 import Stripe from 'stripe';
 
 // mongodb+srv://techexpertjobfinders:S3AjilK4ubU7Al8Q@cluster0.ozqaljr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -54,7 +58,9 @@ app.use(
 // middlewares =====>
 app.use("/api/auth", UserRoute);
 app.use("/api/myCv", cvRoute);
+app.use("/api/website", websiteRoute);
 app.use("/api/myResume", ResumeTemplateRoute);
+app.use("/api/websiteTemplate", WebsiteTemplateRoute);
 app.use("/api/coverLetter", CoverLetterRoute);
 app.use("/api/coverLetterTem", CoverLetterTemplateRoute);
 app.use("/api/job", jobRoutes);
