@@ -16,7 +16,7 @@ import ResumeTemplateRoute from "./Routes/resumeTemplateRoute.js";
 import Stripe from 'stripe';
 
 // mongodb+srv://techexpertjobfinders:S3AjilK4ubU7Al8Q@cluster0.ozqaljr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-const MONGO = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.oahrmzf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`;
+const MONGO = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.oahrmzf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const stripe = new Stripe('sk_test_51PLqWt06k5m2AJAivXSQ49uQVDNMSw0P5bYMHOnrzkgZy1O9ggJqsGWcyLnqtz7wjWsfAAUTismT8NxqvN0gEaPl00yWGbHwf8');
 
 dotenv.config();
