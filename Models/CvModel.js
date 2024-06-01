@@ -2,6 +2,14 @@ import { Schema } from "mongoose";
 import mongoose from "mongoose";
 const cvSchema = Schema(
   {
+    userId: {
+      type: String,
+      // required:true,
+    },
+    templateId: {
+      type: String,
+      // required:true,
+    },
     title: {
       type: String,
       required: true,
@@ -71,8 +79,8 @@ const cvSchema = Schema(
     employer: {
       type: String,
     },
-    previousWorkLocation: {
-      type: String,
+    employmentCity : {
+      type : String
     },
     previousWorkState: {
       type: String,
@@ -131,15 +139,15 @@ const cvSchema = Schema(
     summary: {
       type: String,
     },
-    Hobbies: {
-      type: [
-        {
-          HobbiesInterest: {
-            type: String,
-          },
-        },
-      ],
-    },
+    // Hobbies: {
+    //   type: [
+    //     {
+    //       HobbiesInterest: {
+    //         type: String,
+    //       },
+    //     },
+    //   ],
+    // },
     photoAndSocial: {
       type: {
         image: {
@@ -160,49 +168,49 @@ const cvSchema = Schema(
       },
     },
 
-    refereesName: {
-      type: String,
-    },
-    refereesLastName: {
-      type: String,
-    },
-    position: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    phone: {
-      type: Number,
-    },
-    companyNameOrganization: {
-      type: String,
-    },
-    relationShip: {
-      type: String,
-    },
+    // refereesName: {
+    //   type: String,
+    // },
+    // refereesLastName: {
+    //   type: String,
+    // },
+    // position: {
+    //   type: String,
+    // },
+    // email: {
+    //   type: String,
+    // },
+    // phone: {
+    //   type: Number,
+    // },
+    // companyNameOrganization: {
+    //   type: String,
+    // },
+    // relationShip: {
+    //   type: String,
+    // },
 
-    software: {
-      type: [
-        {
-          software: {
-            type: String,
-          },
-          level: {
-            type: String,
-            enum: [
-              "Novice",
-              "Beginners",
-              "Intermediate",
-              "Proficient",
-              "Expert",
-              "Select",
-            ],
-            default: "Select",
-          },
-        },
-      ],
-    },
+    // software: {
+    //   type: [
+    //     {
+    //       software: {
+    //         type: String,
+    //       },
+    //       level: {
+    //         type: String,
+    //         enum: [
+    //           "Novice",
+    //           "Beginners",
+    //           "Intermediate",
+    //           "Proficient",
+    //           "Expert",
+    //           "Select",
+    //         ],
+    //         default: "Select",
+    //       },
+    //     },
+    //   ],
+    // },
 
     language: {
       type: [
@@ -238,32 +246,32 @@ const cvSchema = Schema(
         },
       ],
     },
-    awards: {
-      type: String,
-    },
-    publication: {
-      type: String,
-    },
-    affiliations: {
-      type: String,
-    },
-    accomplishments: {
-      type: String,
-    },
-    additionalInfo: {
-      type: String,
-    },
+    // awards: {
+    //   type: String,
+    // },
+    // publication: {
+    //   type: String,
+    // },
+    // affiliations: {
+    //   type: String,
+    // },
+    // accomplishments: {
+    //   type: String,
+    // },
+    // additionalInfo: {
+    //   type: String,
+    // },
 
-    others: {
-      type: {
-        title: {
-          type: String,
-        },
-        otherInfo: {
-          type: String,
-        },
-      },
-    },
+    // others: {
+    //   type: {
+    //     title: {
+    //       type: String,
+    //     },
+    //     otherInfo: {
+    //       type: String,
+    //     },
+    //   },
+    // },
   },
   { timestamps: true }
 );
